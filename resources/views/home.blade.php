@@ -21,7 +21,7 @@
                                                 $cant_usuarios = User::count();                                                
                                                 @endphp
                                                 <h2 class="text-right"><i class="fa fa-users f-left"></i><span>{{$cant_usuarios}}</span></h2>
-                                                <p class="m-b-0 text-right"><a href="/usuarios" class="text-white">Users</a></p>
+                                                <p class="m-b-0 text-right"><a href="/users" class="text-white">Users</a></p>
                                             </div>                                            
                                         </div>                                    
                                     </div>
@@ -49,7 +49,7 @@
                                                 $totalDepartment = Department::count();                                                
                                                 @endphp
                                                 <h2 class="text-right"><i class="fa fa-blog f-left"></i><span>{{$totalDepartment}}</span></h2>
-                                                <p class="m-b-0 text-right"><a href="/blogs" class="text-white">Departments</a></p>
+                                                <p class="m-b-0 text-right"><a href="/departments" class="text-white">Departments</a></p>
                                             </div>
                                         </div>
                                     </div>
