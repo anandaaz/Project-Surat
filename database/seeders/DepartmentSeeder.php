@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Department;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 
 class DepartmentSeeder extends Seeder
@@ -28,6 +29,7 @@ class DepartmentSeeder extends Seeder
                 'name' => 'PPIC',
             ],
         ])->each(function ($department) {
+            $department['slug'] = Str::slug($department['name'], '-');
             Department::create($department);
         });
     }

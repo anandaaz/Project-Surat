@@ -55,7 +55,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $payload = $this->validate($request, [
-            'npk' => 'required',
+            'npk' => 'required|unique:users,npk',
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',

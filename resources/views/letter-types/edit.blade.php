@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading">Edit Department {{ $department->name }}</h3>
+            <h3 class="page__heading">Edit Template {{ $letterType->name }}</h3>
         </div>
         <div class="section-body">
             <div class="row">
@@ -23,12 +23,24 @@
                             </div>
                         @endif
 
-                    {!! Form::model($department, ['method' => 'PUT','route' => ['departments.update', $department->id]]) !!}
+                    {!! Form::model($letterType, ['method' => 'PUT','route' => ['letter-types.update', $letterType->id]]) !!}
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
                                 <label for="">Name</label>                                    
-                                {!! Form::text('name', $department->name, array('class' => 'form-control')) !!}
+                                {!! Form::text('name', $letterType->name, array('class' => 'form-control')) !!}
+                            </div>
+                            <div class="form-group">
+                                <label for="">Description</label>                                    
+                                {!! Form::textarea('description', $letterType->description, array('class' => 'form-control')) !!}
+                            </div>
+                            @if ($letterType->file_path)
+                                <label>Current File : </label>
+                                <a href="{{ route('letter-types.download', $letterType->id) }}">{{ str_replace('uploads/softcopy/', '', $letterType->file_path) }}</a>
+                            @endif
+                            <div class="form-group">
+                                <label for="">File</label>                                    
+                                {!! Form::file('file', null, array('class' => 'form-control')) !!}
                             </div>
                         </div>
                         

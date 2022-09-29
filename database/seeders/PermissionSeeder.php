@@ -48,6 +48,22 @@ class PermissionSeeder extends Seeder
                 'name' => 'delete-permission',
                 'guard_name' => 'web',
             ],
+            [
+                'name' => 'create-letter-type',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'edit-letter-type',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'show-letter-type',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'delete-letter-type',
+                'guard_name' => 'web',
+            ],
         ])->each(function ($permission) {
             $permission = Permission::create($permission);
             $roles = Role::all();

@@ -32,7 +32,6 @@
                                 <thead style="background-color:#6777ef">                                                       
                                     <th style="color:#fff;">NPK</th>
                                     <th style="color:#fff;">Name</th>
-                                    <th style="color:#fff;">Position</th>
                                     <th style="color:#fff;">Actions</th>
                                 </thead>  
                                 <tbody>
@@ -40,7 +39,6 @@
                                 <tr>                           
                                     <td>{{ $user->npk ?? '-' }}</td>
                                     <td>{{ $user->name }}</td>
-                                    <td>{{ implode(',', $user->getRoleNames()->toArray())}}</td>
                                     <td>   
                                         
                                         @can('remove-user-department')
@@ -49,7 +47,9 @@
                                             {!! Form::close() !!}
                                         @endcan
 
-                                        
+                                        @can('assign-user-department')
+                                            <a class="btn btn-warning" data-toggle="modal" data-target="#modalMoveUserDepartment" title="Click to move user to another department.">Move User</a>                        
+                                    @endcan
                                     </td>
                                 </tr>
                                 @endforeach
@@ -66,3 +66,35 @@
             </div>
         </section>
 @endsection
+
+@push('modal')
+<div class="modal fade" id="modalMoveUserDepartment" tabindex="-1" role="dialog" aria-labelledby="modalMoveUserDepartmentTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalMoveUserDepartmentTitle">Move User</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            {!! Form::model($user, ['method' => 'PATCH','route' => ['departments.move.user', $user->id]]) !!}
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        {!!Form::label('department_id', 'Select User') !!}
+                        {!! Form::select('department_id', $departments,[], array('class' => 'form-control')) !!}
+                    </div>
+                </div>   
+            </div>
+           
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Save</button>
+            {!! Form::close() !!}
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+@endpush

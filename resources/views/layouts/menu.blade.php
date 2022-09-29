@@ -11,7 +11,16 @@
     <a class="nav-link" href="/departments">
         <i class=" fas fa-user-lock"></i><span>Departments</span>
     </a>
-    <a class="nav-link" href="/blogs">
-        <i class=" fas fa-blog"></i><span>Blogs</span>
+    <a class="nav-link" href="/letter-types">
+        <i class=" fas fa-user-lock"></i><span>Letter Category</span>
     </a>
+
+     <a class="nav-link" href="/letters">
+        <i class=" fas fa-user-lock"></i><span>Letters</span>
+    </a>
+
+     <a class="nav-link" href="/reports">
+        <i class=" fas fa-user-lock"></i><span>Reports</span>
+    </a>
+    
 </li>

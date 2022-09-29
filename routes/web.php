@@ -6,7 +6,9 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LetterController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\LetterTypeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,10 +33,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 //y creamos un grupo de rutas protegidas para los controladores
 Route::group(['middleware' => ['auth']], function() {
-    Route::resource('roles', RoleController::class);
+    Route::resource('roles', RoleController::class); // auto generate route get, show, post, patch/put, delete route
     Route::resource('users', UserController::class);
     Route::resource('departments', DepartmentController::class);
     Route::delete('departments/remove/{userID}', [DepartmentController::class, 'removeUser'])->name('departments.remove.user');
-    Route::patch('departments/move/{userID}', [DepartmentController::class, 'moveUserDepartment'])->name('departments.move.user');
-    Route::resource('blogs', BlogController::class);
+    
+    Route::resource('letter-types', LetterTypeController::class);
+    Route::get('letter-types/download/{id}',[ LetterTypeController::class, 'download'])->name('letter-types.download');
+    Route::resource('letters', LetterController::class);
+    Route::resource('reports', ReportController::class);
 });

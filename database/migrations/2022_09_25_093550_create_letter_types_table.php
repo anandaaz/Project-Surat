@@ -17,6 +17,7 @@ class CreateLetterTypesTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
+            $table->string('file_path');
             $table->timestamps();
         });
     }

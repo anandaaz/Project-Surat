@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Department;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
@@ -17,7 +18,7 @@ class DepartmentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {      
+    {
         $departments = Department::paginate(10);
         return view('departments.index',compact('departments'));
     }
@@ -35,6 +36,7 @@ class DepartmentController extends Controller
         ]);
     
         $payload = $request->all();
+        $payload['slug'] = Str::slug($payload['name'], '-');
 
         Department::create($payload);
     
@@ -50,10 +52,9 @@ class DepartmentController extends Controller
     public function show($id)
     {
         $activeDepartment = Department::findOrFail($id);
-        $usersInDepartment = User::where('department_id', $id)->paginate(10);
-        $departments = Department::where('id', '!=', $id)->pluck('name', 'id')->all();
+        $usersInDepartment = User::where('department_id', $id)->with('roles')->paginate(10);
 
-        return view('departments.show', compact('usersInDepartment', 'departments', 'activeDepartment'));
+        return view('departments.show', compact('usersInDepartment', 'activeDepartment'));
     }
 
     /**
@@ -64,11 +65,9 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
-        $user = Department::find($id);
-        $roles = Role::pluck('name','name')->all();
-        $userRole = $user->roles->pluck('name','name')->all();
-    
-        return view('departments.edit',compact('user','roles','userRole'));
+        $department = Department::find($id);
+       
+        return view('departments.edit',compact('department'));
     }
     
 
@@ -81,26 +80,13 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
+        $payload = $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
-            'password' => 'same:confirm-password',
-            'roles' => 'required'
         ]);
     
-        $input = $request->all();
-        if(!empty($input['password'])){ 
-            $input['password'] = Hash::make($input['password']);
-        }else{
-            $input = Arr::except($input,array('password'));    
-        }
-    
-        $user = Department::find($id);
-        $user->update($input);
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
-    
-        $user->assignRole($request->input('roles'));
-    
+        $department = Department::find($id);
+        $department->update($payload);
+        
         return redirect()->route('departments.index');
     }
 
@@ -116,11 +102,4 @@ class DepartmentController extends Controller
         return redirect()->route('departments.index');
     }
 
-    public function moveUserDepartment(Request $request, $userId){
-        $payload = $request->all();
-        $user = User::findOrFail($userId);
-        $user->update($payload);
-
-        return redirect()->route('departments.show', $payload['department_id']);
-    }
 }

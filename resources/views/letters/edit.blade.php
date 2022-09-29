@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading">Edit Department {{ $department->name }}</h3>
+            <h3 class="page__heading">Editar Rol</h3>
         </div>
         <div class="section-body">
             <div class="row">
@@ -13,7 +13,7 @@
                             
                         @if ($errors->any())                                                
                             <div class="alert alert-dark alert-dismissible fade show" role="alert">
-                            <strong>Error!</strong>                        
+                            <strong>¡Revise los campos!</strong>                        
                                 @foreach ($errors->all() as $error)                                    
                                     <span class="badge badge-danger">{{ $error }}</span>
                                 @endforeach                        
@@ -23,16 +23,27 @@
                             </div>
                         @endif
 
-                    {!! Form::model($department, ['method' => 'PUT','route' => ['departments.update', $department->id]]) !!}
+                    {!! Form::model($role, ['method' => 'PATCH','route' => ['roles.update', $role->id]]) !!}
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
-                                <label for="">Name</label>                                    
-                                {!! Form::text('name', $department->name, array('class' => 'form-control')) !!}
+                                <label for="">Nombre del Rol:</label>      
+                                {!! Form::text('name', null, array('class' => 'form-control')) !!}
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <label for="">Permisos para este Rol:</label>
+                                <br/>
+                                @foreach($permission as $value)
+                                    <label>{{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, array('class' => 'name')) }}
+                                    {{ $value->name }}</label>
+                                <br/>
+                                @endforeach
                             </div>
                         </div>
                         
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
                         
                     </div>
                     {!! Form::close() !!}
