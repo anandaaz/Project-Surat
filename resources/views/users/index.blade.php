@@ -22,7 +22,7 @@
                               <thead style="background-color:#6777ef">                                     
                                   <th style="color:#fff;">NPK</th>
                                   <th style="color:#fff;">Nama</th>
-                                  <th style="color:#fff;">E-mail</th>
+                                  <th style="color:#fff;">username</th>
                                   @role('Admin')
                                   <th style="color:#fff;">Department</th>
                                   @endrole
@@ -34,7 +34,7 @@
                                   <tr>
                                     <td>{{ $user->npk }}</td>
                                     <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $user->username }}</td>
                                     @role('Admin')
                                     <td>{{ $user->department->name }}</td>
                                     @endrole
@@ -46,8 +46,11 @@
                                       @endif
                                     </td>
 
-                                    <td>                                  
-                                      <a class="btn btn-info" href="{{ route('users.edit',$user->id) }}">Edit</a>
+                                    <td class="p-2">                                  
+                                      <a class="btn btn-warning mb-1" href="{{ route('users.edit',$user->id) }}">Show</a>
+                                      <br/>
+                                      <a class="btn btn-info mb-1" href="{{ route('users.edit',$user->id) }}">Edit</a>
+                                      <br/>
 
                                       {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
                                           {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}

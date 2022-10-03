@@ -33,6 +33,12 @@
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
+                                    <label for="username">Username</label>
+                                    {!! Form::text('username', null, array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
                                     <label for="name">Nama</label>
                                     {!! Form::text('name', null, array('class' => 'form-control')) !!}
                                 </div>

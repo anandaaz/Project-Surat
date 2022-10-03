@@ -23,39 +23,23 @@
                     <div class="card">
                         <div class="card-body">
         
-                        @can('create-letter-type')
-                        <a class="btn btn-warning" data-toggle="modal" data-target="#modalLetterType" title="Click to add a new department.">Add New Letter Category</a>                        
-                        @endcan
-        
                             <table class="table table-striped mt-2">
                                 <thead style="background-color:#6777ef">                                                       
-                                    <th style="color:#fff;">Letters</th>
-                                    <th style="color:#fff;">Descriptions</th>
+                                    <th style="color:#fff;">Departments</th>
                                     <th style="color:#fff;">Actions</th>
                                 </thead>  
                                 <tbody>
-                                @foreach ($letterTypes as $letterType)
+                                @foreach ($departments as $department)
                                 <tr>                           
-                                    <td>{{ $letterType->name }}</td>
-                                    <td>{{ $letterType->description }}</td>
+                                    <td>{{ $department->name }}</td>
                                     <td>
-                                        <a class="btn btn-success" href="{{ route('letter-types.download',$letterType->id) }}">Download</a>
-
-                                        @can('edit-letter-type')
-                                            <a class="btn btn-primary" href="{{ route('letter-types.edit',$letterType->id) }}">Edit</a>
-                                        @endcan
-                                        
-                                        @can('delete-letter-type')
-                                            {!! Form::open(['method' => 'DELETE','route' => ['letter-types.destroy', $letterType->id],'style'=>'display:inline']) !!}
-                                                {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                                            {!! Form::close() !!}
-                                        @endcan
+                                        <a class="btn btn-success" href="{{ route('letter-types.show',$department->id) }}">Lihat Form</a>
                                     </td>
                                 </tr>
                                 @endforeach
                                 </tbody>               
                             </table>
-
+                            
                             <div class="pagination justify-content-end">
                                 {!! $letterTypes->links() !!} 
                             </div>                    
@@ -66,43 +50,3 @@
             </div>
         </section>
 @endsection
-
-//modal create 
-@push('modal')
-<div class="modal fade" id="modalLetterType" tabindex="-1" role="dialog" aria-labelledby="modalLetterTypeTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalLetterTypeTitle">Add New Templates</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            {!! Form::open(array('route' => 'letter-types.store','method'=>'POST', 'enctype'=>'multipart/form-data')) !!}
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <label for="">Name</label>                                    
-                        {!! Form::text('name', null, array('class' => 'form-control')) !!}
-                    </div>
-                    <div class="form-group">
-                        <label for="">Description</label>                                    
-                        {!! Form::textarea('description', null, array('class' => 'form-control')) !!}
-                    </div>
-                    <div class="form-group">
-                        <label for="">File</label>                                    
-                        {!! Form::file('file', null, array('class' => 'form-control')) !!}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Save</button>
-            {!! Form::close() !!}
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        </div>
-      </div>
-    </div>
-  </div>
-@endpush

@@ -13,6 +13,8 @@ use App\Http\Resources\UserLetterHelperResource;
 
 class LetterController extends Controller
 {
+
+   
     /**
      * Display a listing of the resource.
      *
@@ -20,17 +22,17 @@ class LetterController extends Controller
      */
     public function index(Request $request)
     {      
-        $letters = Letter::with('user', 'user.department')->paginate(10);
-        $departments = Department::all()->pluck('name', 'id');
-        $letterTypes = LetterType::all()->pluck('name', 'id');
-        $users = User::all();
-        
-        $usersModified = array();
-        foreach($users as  $user){
-            $usersModified[$user->id] = $user->npk . ' - ' . $user->name;
+        $user = request()->user();
+        if(!$user->hasRole('Admin')){
+            // jika bukan admin
+            return  $this->show($user->department->id);
         }
 
-        return view('letters.index',compact('usersModified', 'letters', 'departments', 'letterTypes'));
+        $letters = Letter::with('user', 'user.department')->paginate(10);
+        $departments = Department::paginate(10);
+       
+
+        return view('letters.index',compact('departments'));
     }
 
     // handle upload file
@@ -85,13 +87,12 @@ class LetterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($departmentId)
     {
-        $activeDepartment = Department::findOrFail($id);
-        $usersInDepartment = User::where('department_id', $id)->paginate(10);
-        $departments = Department::where('id', '!=', $id)->pluck('name', 'id')->all();
-
-        return view('departments.show', compact('usersInDepartment', 'departments', 'activeDepartment'));
+        $letterTypes = LetterType::where('department_id', $departmentId)->pluck('name', 'id')->all();
+        $letters = Letter::with('user', 'letter_type', 'department')->where('department_id', $departmentId)->paginate(20);
+        
+        return view('letters.show', compact('letters', 'letterTypes'));
     }
 
     /**

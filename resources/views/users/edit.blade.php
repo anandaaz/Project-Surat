@@ -23,40 +23,46 @@
                             </div>
                         @endif
 
-                        {!! Form::model($user, ['method' => 'PATCH','route' => ['usuarios.update', $user->id]]) !!}
+                        {!! Form::model($user, ['method' => 'PATCH','route' => ['users.update', $user->id]]) !!}
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <label for="name">Nombre</label>
-                                    {!! Form::text('name', null, array('class' => 'form-control')) !!}
+                                    <label for="npk">NPK</label>
+                                    {!! Form::number('npk', $user->npk, array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    {!! Form::text('username', $user->username, array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="name">Nama</label>
+                                    {!! Form::text('name', $user->name, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="email">E-mail</label>
-                                    {!! Form::text('email', null, array('class' => 'form-control')) !!}
+                                    {!! Form::text('email', $user->email, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <label for="password">Password</label>
-                                    {!! Form::password('password', array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <label for="confirm-password">Confirmar Password</label>
-                                    {!! Form::password('confirm-password', array('class' => 'form-control')) !!}
+                                    <label for="">Department</label>
+                                    {!! Form::select('department_id', $departments,[], array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="">Roles</label>
-                                    {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control')) !!}
+                                    {!! Form::select('roles[]', $roles,[], array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
                             </div>
                         </div>
                         {!! Form::close() !!}

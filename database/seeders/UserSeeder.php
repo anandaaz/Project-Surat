@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
     {
         collect([
             [
+                'username' => 'refinaldy',
                 'name' => 'Refinaldy',
                 'npk' => '000000000000000',
                 'email' => 'refinaldy@test.test',
@@ -25,6 +26,7 @@ class UserSeeder extends Seeder
                 'department_id' => 1, 
             ],
             [
+                'username' => 'shinta',
                 'name' => 'Shinta',
                 'npk' => '11111111111111111',
                 'email' => 'shinta@test.test',
@@ -32,6 +34,7 @@ class UserSeeder extends Seeder
                 'department_id' => 2,
             ],
             [
+                'username' => 'ananda TS',
                 'name' => 'Ananda TS',
                 'npk' => '222222222222222222',
                 'email' => 'ananda@test.test',

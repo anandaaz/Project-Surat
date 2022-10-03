@@ -39,7 +39,7 @@ class DepartmentController extends Controller
         $payload['slug'] = Str::slug($payload['name'], '-');
 
         Department::create($payload);
-    
+
         return redirect()->route('departments.index');
     }
 

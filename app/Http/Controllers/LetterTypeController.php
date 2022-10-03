@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use App\Models\LetterType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -17,7 +18,15 @@ class LetterTypeController extends Controller
     public function index(Request $request)
     {      
         $letterTypes = LetterType::paginate(10);
-        return view('letter-types.index',compact('letterTypes'));
+        $departments = Department::all();
+        return view('letter-types.index',compact('letterTypes', 'departments'));
+    }
+
+    public function show($id){
+        $department = Department::find($id);
+        $letterTypes = LetterType::with('user', 'user.roles')->where('department_id', $id)->paginate(10);
+
+        return view('letter-types.show', compact('letterTypes', 'department'));
     }
 
     // handle upload file
@@ -32,6 +41,11 @@ class LetterTypeController extends Controller
         return $path;
     }
 
+    public function create($departmentId){
+        $department = Department::find($departmentId);
+        return view('letter-types.create', compact('department'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -44,17 +58,20 @@ class LetterTypeController extends Controller
         $payload = $this->validate($request, [
             'name' => 'required',
             'description' => 'required',
-            'file' => 'required|mimes:pdf|max:10240',
+            'html' => 'required',
+            'department_id' => 'required'
         ]);
-
+        
         if (request()->hasFile('file')) {
             $path = $this->handleUploadFile($request);
             $payload['file_path'] = $path;
         }
 
+        $payload['user_id'] = $request->user()->id;
+
         LetterType::create($payload);
     
-        return redirect()->route('letter-types.index');
+        return redirect()->route('letter-types.show', $payload['department_id']);
     }
 
     /**
@@ -62,7 +79,7 @@ class LetterTypeController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */
+    */
     public function edit($id)
     {
         $letterType = LetterType::find($id);
@@ -83,9 +100,10 @@ class LetterTypeController extends Controller
         $payload = $this->validate($request, [
             'name' => 'required',
             'description' => 'required',
+            'html' => 'required',
         ]);
 
-        $letterType = LetterType::find($id);
+        $letterType = LetterType::with('department')->find($id);
         $payload['file_path'] = $letterType->file_path;
         
         if (request()->hasFile('file')) {
@@ -95,9 +113,10 @@ class LetterTypeController extends Controller
             $payload['file_path'] = $path;
         }
 
+        $payload['user_id'] = $request->user()->id;
         $letterType->update($payload);
         
-        return redirect()->route('letter-types.index');
+        return redirect()->route('letter-types.show', $letterType->department->id);
     }
 
     /**
@@ -108,10 +127,11 @@ class LetterTypeController extends Controller
      */
     public function destroy($id)
     {
-        $letterType = LetterType::find($id);
+        $letterType = LetterType::with('department')->find($id);
+        $departmentId = $letterType->department->id;
         File::delete(public_path($letterType->file_path)); // delete old files
         LetterType::find($id)->delete();
-        return redirect()->route('letter-types.index');
+        return redirect()->route('letter-types.show', $departmentId);
     }
 
     //handle download file
@@ -123,4 +143,22 @@ class LetterTypeController extends Controller
 
     	return Response::download($path, $fileName);
     }
+
+    public function test(){
+        return view('layouts.ckeditor');
+    }
+
+
+
+
+    public function handleUploadImageCKEditor(Request $request){
+        if (request()->hasFile('file')) {
+            $path = $this->handleUploadFile($request);
+            
+        }
+
+        return $path;
+    }
+
+
 }

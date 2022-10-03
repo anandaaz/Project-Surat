@@ -17,4 +17,8 @@ class Letter extends Model
     public function letter_type(){
         return $this->belongsTo(LetterType::class, 'letter_type_id');
     }
+
+    public function department(){
+        return $this->belongsto(Department::class, 'department_id');
+    }
 }

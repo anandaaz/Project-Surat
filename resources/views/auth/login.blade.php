@@ -19,14 +19,14 @@
                     </div>
                 @endif
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input aria-describedby="emailHelpBlock" id="email" type="email"
-                           class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email"
-                           placeholder="Enter Email" tabindex="1"
-                           value="{{ (Cookie::get('email') !== null) ? Cookie::get('email') : old('email') }}" autofocus
+                    <label for="username">username</label>
+                    <input aria-describedby="usernameHelpBlock" id="username" type="text"
+                           class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username"
+                           placeholder="Enter username" tabindex="1"
+                           value="{{ (Cookie::get('username') !== null) ? Cookie::get('username') : old('username') }}" autofocus
                            required>
                     <div class="invalid-feedback">
-                        {{ $errors->first('email') }}
+                        {{ $errors->first('username') }}
                     </div>
                 </div>
 

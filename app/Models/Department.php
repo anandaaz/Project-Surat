@@ -13,4 +13,8 @@ class Department extends Model
     public function users(){
         return $this->hasMany(User::class, 'department_id', 'id');
     }
+    
+    public function letter_types(){
+        return $this->hasMany(LetterType::class, 'department_id', 'id');
+    }
 }

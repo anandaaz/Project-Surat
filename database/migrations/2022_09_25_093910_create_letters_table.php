@@ -17,10 +17,12 @@ class CreateLettersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('file_path');
+            $table->string('html');
+            $table->enum('status', ['APPROVED', 'DRAFT', 'WAITING']);
             $table->foreignId('letter_type_id')->constrained('letter_types')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('department_id')->constrained('departments')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->timestamp('date');
+            $table->timestamp('date')->nullable();
             $table->timestamps();
         });
     }

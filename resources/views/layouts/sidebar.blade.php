@@ -1,6 +1,6 @@
 <aside id="sidebar-wrapper">
     <div class="sidebar-brand">
-        <i class="fa-solid fa-heart"></i>
+        <img class="navbar-brand-full" src="{{ asset('img/logo.png') }}" width="45px" alt=""/>
         <a href="{{ url('/') }}"></a>
     </div>
     <div class="sidebar-brand sidebar-brand-sm">

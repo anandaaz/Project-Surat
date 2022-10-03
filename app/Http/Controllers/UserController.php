@@ -57,6 +57,7 @@ class UserController extends Controller
         $payload = $this->validate($request, [
             'npk' => 'required|unique:users,npk',
             'name' => 'required',
+            'username' => 'required|unique:users,username',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
             'roles' => 'required',
@@ -91,10 +92,11 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
+        $departments = Department::pluck('name', 'id');
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
     
-        return view('users.edit',compact('user','roles','userRole'));
+        return view('users.edit',compact('user','roles','userRole', 'departments'));
     }
     
 
@@ -108,19 +110,17 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
+            'npk' => 'required',
             'name' => 'required',
+            'username' => 'required|unique:users,username,'.$id,
             'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'same:confirm-password',
-            'roles' => 'required'
+            'department_id' => 'required',
+            'roles' => 'required',
         ]);
     
         $input = $request->all();
-        if(!empty($input['password'])){ 
-            $input['password'] = Hash::make($input['password']);
-        }else{
-            $input = Arr::except($input,array('password'));    
-        }
-    
+        
         $user = User::find($id);
         $user->update($input);
         DB::table('model_has_roles')->where('model_id',$id)->delete();
