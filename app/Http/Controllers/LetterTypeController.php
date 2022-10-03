@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Response;
 
 class LetterTypeController extends Controller
 {
+    public function __construct(){
+        $this->middleware('admin');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -59,8 +62,9 @@ class LetterTypeController extends Controller
             'name' => 'required',
             'description' => 'required',
             'html' => 'required',
-            'department_id' => 'required'
+            'department_id' => 'required',
         ]);
+
         
         if (request()->hasFile('file')) {
             $path = $this->handleUploadFile($request);

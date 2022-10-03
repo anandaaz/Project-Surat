@@ -17,9 +17,11 @@
         <i class=" fas fa-user-lock"></i><span>Departments</span>
     </a>
 
+    @role('Admin')
     <a class="nav-link" href="/letter-types">
         <i class=" fas fa-user-lock"></i><span>Letter Category</span>
     </a>
+    @endrole
 
      <a class="nav-link" href="/letters">
         <i class=" fas fa-user-lock"></i><span>Letters</span>
