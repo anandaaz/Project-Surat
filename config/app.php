@@ -177,9 +177,10 @@ return [
 
         //spatie
         Spatie\Permission\PermissionServiceProvider::class,
+
+        // dompdf
+        Barryvdh\DomPDF\ServiceProvider::class,
     
-        //Excel
-        Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
     /*
@@ -233,8 +234,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        // excel
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        //dom
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 

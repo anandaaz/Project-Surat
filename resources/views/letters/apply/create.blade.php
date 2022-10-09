@@ -40,7 +40,8 @@ thead td, thead th {
                       </div>
                   @endif
 
-                  {!! Form::model($letterType, array('route' => array('letter-types.update', $letterType->id),'method'=>'PUT')) !!}
+                <form action="{{ route('letters.apply.store', [$letterType->department_id ,$letterType->id]) }}" method="post">
+                    @csrf
                   <div class="row">
                       <div class="col-xs-12 col-sm-12 col-md-12">
                           <div class="form-group">
@@ -55,7 +56,7 @@ thead td, thead th {
                     {!! Form::file('file', null, array('class' => 'form-control')) !!}
                   </div>
                   <button type="submit" class="btn btn-primary">Save</button>
-                  {!! Form::close() !!}
+                    </form>
                   </div>
               </div>
           </div>

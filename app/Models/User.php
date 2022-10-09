@@ -54,7 +54,7 @@ class User extends Authenticatable
         return $this->belongsTo(Department::class, 'department_id');
     }
 
-    public function letters(){
-        return $this->hasMany(Letter::class, 'letter_id', 'id');
+    public function surat_cuti(){
+        return $this->hasMany(SuratCuti::class, 'user_id', 'id');
     }
 }

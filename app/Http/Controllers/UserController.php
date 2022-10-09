@@ -130,6 +130,24 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
+    public function changePassword(Request $request, $id){
+        $this->validate($request, [
+            'password_current' => 'required',
+            'password' => 'same:password_confirmation',
+        ]);
+        
+        $input = $request->all();
+        $password = Hash::make($input['password']);
+
+        $user = User::find($id);
+        
+        $user->update([
+            'password' => $password,
+        ]);
+    
+        return redirect()->route('home');
+    }
+
     /**
      * Remove the specified resource from storage.
      *

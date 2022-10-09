@@ -23,8 +23,8 @@
     </a>
     @endrole
 
-     <a class="nav-link" href="/letters">
-        <i class=" fas fa-user-lock"></i><span>Letters</span>
+    <a class="nav-link" href="/surat-cuti">
+        <i class=" fas fa-user-lock"></i><span>Form Cuti</span>
     </a>
 
      <a class="nav-link" href="/reports">

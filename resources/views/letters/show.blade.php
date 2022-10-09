@@ -28,13 +28,14 @@
                         </div>
                         <div class="card-body">
         
-                        <a class="btn btn-warning" data-toggle="modal" data-target="#modalLetter" title="Click to add a new department.">Add New Letter Category</a>                        
+                        <a class="btn btn-warning" data-toggle="modal" data-target="#modalLetter" title="Click to add a new department.">Ajukan Form</a>                        
         
                             <table class="table table-striped mt-2">
                                 <thead style="background-color:#6777ef">                                                       
                                     <th style="color:#fff;">NPK</th>
                                     <th style="color:#fff;">Name</th>
                                     <th style="color:#fff;">Letters Category</th>
+                                    <th style="color:#fff;">Status</th>
                                     <th style="color:#fff;">Actions</th>
                                 </thead>  
                                 <tbody>
@@ -43,18 +44,23 @@
                                     <td>{{ $letter->user->npk }}</td>
                                     <td>{{ $letter->user->name }}</td>
                                     <td>{{ $letter->name }}</td>
-                                    <td>
-                                        <a class="btn btn-primary" href="{{ route('letters.show',$letter->id) }}">Detail</a>
+                                    <td> 
+                                        <span class="badge {{ $letter->status === 'DRAFT' ? 'badge-dark' : ($letter->status === 'WAITING' ? 'badge-warning' : 'badge-success') }}">{{ $letter->status }}
+                                        </span>
+                                        </td>
+                                    <td class="p-1">
 
-                                        @can('edit-letter')
-                                            <a class="btn btn-primary" href="{{ route('letters.edit',$letter->id) }}">Edit</a>
-                                        @endcan
+                                        <a class="btn btn-primary mb-1" href="{{ route('letters.apply.edit', [$letter->user->department->id,$letter->id]) }}">Edit Form</a>
+                                        <a class="btn btn-primary mb-1" href="{{ route('letters.download', [$letter->user->department->id,$letter->id]) }}">Download PDF</a>
+                                        <br/>
                                         
-                                        @can('delete-letter')
-                                            {!! Form::open(['method' => 'DELETE','route' => ['letters.destroy', $letter->id],'style'=>'display:inline']) !!}
-                                                {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                                            {!! Form::close() !!}
-                                        @endcan
+                                        <a class="btn btn-primary mb-1" href="{{ route('letters.edit',$letter->id) }}">Submit Evidence</a>
+                                        <br/>
+
+                                        {!! Form::open(['method' => 'DELETE','route' => ['letters.destroy', $letter->id],'style'=>'display:inline']) !!}
+                                            {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                        {!! Form::close() !!}
+                                    
                                     </td>
                                 </tr>
                                 @endforeach
@@ -77,13 +83,14 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalLetterTitle">Pilih Jenis Form</h5>
+          <h5 class="modal-title" id="modalLetterTitle">Pilih Jenis Form Yang Ingin Diajukan</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-            {!! Form::open(array('route' => 'letters.apply','method'=>'POST')) !!}
+            <form action="{{ route('letters.apply', request()->user()->department->id) }}" method="POST">
+            @csrf
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">               
                     <div class="form-group">
@@ -96,7 +103,7 @@
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-primary">Buat</button>
-            {!! Form::close() !!}
+        </form>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         </div>
       </div>

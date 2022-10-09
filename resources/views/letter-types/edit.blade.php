@@ -58,15 +58,7 @@ thead td, thead th {
                           </div>
                       </div>    
                   </div>
-                  <div class="row">
-                      <div class="col-xs-12 col-sm-12 col-md-12">
-                          <div class="form-group">
-                            <textarea name="html" id="html" rows="10" cols="80">
-                              {{ $letterType->html }}
-                            </textarea>
-                          </div>
-                      </div>    
-                  </div>
+                  
                   <button type="submit" class="btn btn-primary">Save</button>
                   {!! Form::close() !!}
                   </div>

@@ -16,14 +16,16 @@ class CreateLettersTable extends Migration
         Schema::create('letters', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('file_path');
-            $table->string('html');
+            $table->string('form');
+            $table->string('evidence')->nullable();
+            $table->text('html');
             $table->enum('status', ['APPROVED', 'DRAFT', 'WAITING']);
             $table->foreignId('letter_type_id')->constrained('letter_types')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('department_id')->constrained('departments')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamp('date')->nullable();
             $table->timestamps();
+            $table->string('updated_by');
+            $table->string('created_by');
         });
     }
 

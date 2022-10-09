@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             [
                 'username' => 'refinaldy',
                 'name' => 'Refinaldy',
-                'npk' => '000000000000000',
+                'npk' => '0912N',
                 'email' => 'refinaldy@test.test',
                 'password' => Hash::make('password'),
                 'department_id' => 1, 
@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
             [
                 'username' => 'shinta',
                 'name' => 'Shinta',
-                'npk' => '11111111111111111',
+                'npk' => '123N',
                 'email' => 'shinta@test.test',
                 'password' => Hash::make('password'),
                 'department_id' => 2,
@@ -36,10 +36,18 @@ class UserSeeder extends Seeder
             [
                 'username' => 'ananda TS',
                 'name' => 'Ananda TS',
-                'npk' => '222222222222222222',
+                'npk' => '987K',
                 'email' => 'ananda@test.test',
                 'password' => Hash::make('password'),
                 'department_id' => 3,
+            ],
+            [
+                'username' => 'anandats',
+                'name' => 'Ananda TS 2',
+                'npk' => '9121',
+                'email' => 'ananda2@test.test',
+                'password' => Hash::make('password'),
+                'department_id' => 4,
             ],
         ])->each(function ($user) {
             $user = User::create($user);

@@ -6,7 +6,7 @@
                 <h5 class="modal-title">Change Password</h5>
                 <button type="button" aria-label="Close" class="close outline-none" data-dismiss="modal">×</button>
             </div>
-            <form method="POST" id='changePasswordForm'>
+            <form method="POST" action="{{ route('auth.update', request()->user()->id) }}" id='changePasswordForm'>
             <div class="modal-body">
                 @if ($errors->any())
                     <div class="alert alert-danger">
@@ -23,7 +23,7 @@
                     {{csrf_field()}}
                 <div class="row">
                     <div class="form-group col-sm-12">
-                        <label>Current Password:</label><span
+                        <label>Password Sekarang:</label><span
                                 class="required confirm-pwd"></span><span class="required">*</span>
                         <div class="input-group">
                             <input class="form-control input-group__addon" id="pfCurrentPassword" type="password"
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <div class="form-group col-sm-12">
-                        <label>New Password:</label><span
+                        <label>Password Baru:</label><span
                                 class="required confirm-pwd"></span><span class="required">*</span>
                         <div class="input-group">
                             <input class="form-control input-group__addon" id="pfNewPassword" type="password"
@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <div class="form-group col-sm-12">
-                        <label>Confirm Password:</label><span
+                        <label>Konfirmasi Password Baru:</label><span
                                 class="required confirm-pwd"></span><span class="required">*</span>
                         <div class="input-group">
                             <input class="form-control input-group__addon" id="pfNewConfirmPassword" type="password"

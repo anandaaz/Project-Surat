@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 use App\Http\Resources\UserLetterHelperResource;
+use Dompdf\Dompdf;
 
 class LetterController extends Controller
 {
@@ -91,7 +92,6 @@ class LetterController extends Controller
     {
         $letterTypes = LetterType::where('department_id', $departmentId)->pluck('name', 'id')->all();
         $letters = Letter::with('user', 'letter_type', 'department')->where('department_id', $departmentId)->paginate(20);
-        
         return view('letters.show', compact('letters', 'letterTypes'));
     }
 
@@ -139,5 +139,20 @@ class LetterController extends Controller
     {
         Letter::find($id)->delete();
         return redirect()->route('letters.index');
+    }
+
+    public function download($departmentId, $letterID){
+        $letter = Letter::find($letterID);
+        $pdf = new Dompdf();
+        // Load HTML content 
+        $pdf->loadHtml($letter->html); 
+        
+        // (Optional) Setup the paper size and orientation 
+        $pdf->setPaper('A4', 'potrait'); 
+        
+        // Render the HTML as PDF 
+        $pdf->render(); 
+        // Output the generated PDF to Browser 
+        $pdf->stream();
     }
 }

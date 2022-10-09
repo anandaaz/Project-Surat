@@ -53,6 +53,8 @@
 
 @section('scripts')
 <script>
+
+
   CKEDITOR.replace('surat');
 </script>
 @endsection
