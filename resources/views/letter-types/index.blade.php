@@ -33,8 +33,10 @@
                                 <tr>                           
                                     <td>{{ $type->name }}</td>
                                     <td>
-                                        <a class="btn btn-success" href="{{ route('letter-types.show',$type->id) }}">Lihat Form</a>
+                                        <a class="btn btn-success" href="{{ route('letter-types.download',$type->id) }}">Download Form</a>
+                                        <a class="btn btn-info" href="{{ route('letter-types.edit',$type->id) }}">Edit Form</a>
                                     </td>
+                                    
                                 </tr>
                                 @endforeach
                                 </tbody>               

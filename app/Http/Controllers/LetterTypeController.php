@@ -103,7 +103,6 @@ class LetterTypeController extends Controller
         $payload = $this->validate($request, [
             'name' => 'required',
             'description' => 'required',
-            'html' => 'required',
         ]);
 
         $letterType = LetterType::with('department')->find($id);
@@ -119,7 +118,7 @@ class LetterTypeController extends Controller
         $payload['user_id'] = $request->user()->id;
         $letterType->update($payload);
         
-        return redirect()->route('letter-types.show', $letterType->department->id);
+        return redirect()->route('letter-types.index');
     }
 
     /**
@@ -130,11 +129,10 @@ class LetterTypeController extends Controller
      */
     public function destroy($id)
     {
-        $letterType = LetterType::with('department')->find($id);
-        $departmentId = $letterType->department->id;
+        $letterType = LetterType::find($id);
         File::delete(public_path($letterType->file_path)); // delete old files
         LetterType::find($id)->delete();
-        return redirect()->route('letter-types.show', $departmentId);
+        return redirect()->route('letter-types.index');
     }
 
     //handle download file

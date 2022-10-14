@@ -41,7 +41,7 @@ thead td, thead th {
                   @endif
 
 
-                  {!! Form::model($letterType, array('route' => array('letter-types.update', $letterType->id),'method'=>'PUT')) !!}
+                  {!! Form::model($letterType, array('route' => array('letter-types.update', $letterType->id),'method'=>'PUT', 'enctype' => 'multipart/form-data')) !!}
                   <div class="row">
                       <div class="col-xs-12 col-sm-12 col-md-12">
                           <div class="form-group">
@@ -55,6 +55,23 @@ thead td, thead th {
                           <div class="form-group">
                             <label for="description">Deskripsi Form</label>
                             {!! Form::text('description', $letterType->description, array('class' => 'form-control')) !!}
+                          </div>
+                      </div>    
+                  </div>
+
+                  <div class="row">
+                      <div class="col-xs-12 col-sm-12 col-md-12">
+                          <div class="form-group">
+                            <label for="lama">Form Lama : </label> <br/>
+                            <a  href="{{ route('letter-types.download',$letterType->id) }}">{{ $letterType->file_path ?? 'Belum ada form yang diupload'}}</a>
+                          </div>
+                      </div>    
+                  </div>
+                  <div class="row">
+                      <div class="col-xs-12 col-sm-12 col-md-12">
+                          <div class="form-group">
+                            <label for="file">Upload Form Baru</label>
+                            {!! Form::file('file', null, array('class' => 'form-control')) !!}
                           </div>
                       </div>    
                   </div>
