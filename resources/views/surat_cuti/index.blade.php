@@ -55,18 +55,18 @@
                                     <td>{{ $cuti->tanggal_evidence ?? '' }}</td>
                                     <td>{{ $cuti->lama_cuti }}</td>
                                     <td class="p-1">   
-                                        <a class="btn btn-success mb-1" href="{{ route('surat-cuti.download',[$cuti->user->department->id, $cuti->id]) }}">Download</a>
+                                        <a class="btn btn-success mb-1" href="{{ route('letters.cuti.download',[$cuti->user->department->id, $cuti->id]) }}">Download</a>
                                         <br/>
-                                        <a class="btn btn-primary mb-1" href="{{ route('surat-cuti.show',$cuti->id) }}">Detail</a>
+                                        <a class="btn btn-primary mb-1" href="{{ route('letters.cuti.show',$cuti->id) }}">Detail</a>
                                         <br/>
                                         
                                         @can('edit-department')
-                                        <a class="btn btn-info mb-1" href="{{ route('surat-cuti.edit',$cuti->id) }}">Edit</a>
+                                        <a class="btn btn-info mb-1" href="{{ route('letters.cuti.edit',$cuti->id) }}">Edit</a>
                                         @endcan
                                         <br/>
                                         
                                         @can('delete-department')
-                                            {!! Form::open(['method' => 'DELETE','route' => ['surat-cuti.destroy', $cuti->id],'style'=>'display:inline']) !!}
+                                            {!! Form::open(['method' => 'DELETE','route' => ['letters.cuti.destroy', $cuti->id],'style'=>'display:inline']) !!}
                                                 {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
                                             {!! Form::close() !!}
                                         @endcan
@@ -98,12 +98,12 @@
           </button>
         </div>
         <div class="modal-body">
-            {!! Form::open(array('route' => 'surat-cuti.store','method'=>'POST', 'enctype' => 'multipart/form-data')) !!}
+            {!! Form::open(array('route' => 'letters.cuti.store','method'=>'POST', 'enctype' => 'multipart/form-data')) !!}
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <label for="">NPK - Nama - Departments</label>  
-                        <select class="form-control select2" style="width: 100%" name="user_id" id="user_id">
+                        <select class="form-control user_id" style="width: 100%" name="user_id" id="user_id">
                             <option value="" disabled>Pilih NPK - Nama - Department</option>    
                             @foreach ($users as $user)                            
                                 <option value="{{ $user->id }}" >{{ $user->npk . ' - ' .  $user->name . ' - ' . $user->department->name}} </option>    
@@ -143,10 +143,6 @@
                         <label for="">File Evidence</label>                                    
                         {!! Form::file('evidence', null, array('class' => 'form-control select2', 'style' => "width: 100%")) !!}
                     </div>
-                     <div class="form-group">
-                        <label for="">Tanggal Pengesahan Evidence</label>                                    
-                        {!! Form::date('evidence', null, array('class' => 'form-control select2', 'style' => "width: 100%")) !!}
-                    </div>
                 </div>
             </div>
            
@@ -160,3 +156,13 @@
     </div>
   </div>
 @endpush
+
+@section('scripts')
+<script>
+    $(document).ready(function() {
+        $(".user_id").select2({
+            dropdownParent: $("#modalCreateCutiForm"),
+        });
+    });
+</script>
+@endsection

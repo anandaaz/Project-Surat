@@ -16,10 +16,12 @@ class CreateSuratIzinMPSTable extends Migration
         Schema::create('surat_izin_m_p_s', function (Blueprint $table) {
             $table->id();
             $table->string('section');
-            $table->timestamp('berangkat');
-            $table->timestamp('kembali');
+            $table->timestamp('berangkat')->nullable();
+            $table->timestamp('kembali')->nullable();
             $table->text('keperluan');
+            $table->foreignId('letter_type_id')->constrained('letter_types')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('evidence')->nullable();
             $table->timestamps();
         });
     }

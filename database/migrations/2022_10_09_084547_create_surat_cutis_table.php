@@ -31,7 +31,6 @@ class CreateSuratCutisTable extends Migration
             $table->unsignedDouble('saldo_cuti');
             $table->text('catatan');
             $table->string('evidence')->nullable();
-            $table->string('tanggal_evidence')->nullable();
             $table->foreignId('letter_type_id')->constrained('letter_types')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();

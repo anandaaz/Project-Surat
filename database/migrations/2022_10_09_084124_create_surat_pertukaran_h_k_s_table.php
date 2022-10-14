@@ -28,6 +28,7 @@ class CreateSuratPertukaranHKSTable extends Migration
             $table->enum('kondisi_pertukaran', ['Masuk', 'Libur']);
             $table->text('alasan');
             $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('letter_type_id')->constrained('letter_types')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

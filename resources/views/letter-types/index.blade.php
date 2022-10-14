@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading">Letter Templates</h3>
+            <h3 class="page__heading">Jenis Form</h3>
         </div>
          @if ($errors->any())                                                
             <div class="alert alert-dark alert-dismissible fade show" role="alert">
@@ -25,15 +25,15 @@
         
                             <table class="table table-striped mt-2">
                                 <thead style="background-color:#6777ef">                                                       
-                                    <th style="color:#fff;">Departments</th>
-                                    <th style="color:#fff;">Actions</th>
+                                    <th style="color:#fff;">Nama Form</th>
+                                    <th style="color:#fff;">Aksi</th>
                                 </thead>  
                                 <tbody>
-                                @foreach ($departments as $department)
+                                @foreach ($letterTypes as $type)
                                 <tr>                           
-                                    <td>{{ $department->name }}</td>
+                                    <td>{{ $type->name }}</td>
                                     <td>
-                                        <a class="btn btn-success" href="{{ route('letter-types.show',$department->id) }}">Lihat Form</a>
+                                        <a class="btn btn-success" href="{{ route('letter-types.show',$type->id) }}">Lihat Form</a>
                                     </td>
                                 </tr>
                                 @endforeach

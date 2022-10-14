@@ -24,7 +24,7 @@ class SuratCutiSeeder extends Seeder
                 'kategori_cuti' => 'Cuti Melahirkan',
                 'saldo_cuti' => 10000,
                 'catatan' => 'Ini Catatan',
-                'letter_type_id' => 4,
+                'letter_type_id' => 2,
                 'user_id' => 2,
             ],
             [
@@ -36,7 +36,7 @@ class SuratCutiSeeder extends Seeder
                 'kategori_cuti' => 'Cuti Melahirkan',
                 'saldo_cuti' => 10000,
                 'catatan' => 'Ini Catatan',
-                'letter_type_id' => 4,
+                'letter_type_id' => 2,
                 'user_id' => 3,
             ],
             [
@@ -48,7 +48,7 @@ class SuratCutiSeeder extends Seeder
                 'kategori_cuti' => 'Cuti Melahirkan',
                 'saldo_cuti' => 10000,
                 'catatan' => 'Ini Catatan',
-                'letter_type_id' => 4,
+                'letter_type_id' => 2,
                 'user_id' => 4,
             ],
             

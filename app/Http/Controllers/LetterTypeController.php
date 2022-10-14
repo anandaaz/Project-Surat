@@ -20,9 +20,8 @@ class LetterTypeController extends Controller
      */
     public function index(Request $request)
     {      
-        $letterTypes = LetterType::paginate(10);
-        $departments = Department::all();
-        return view('letter-types.index',compact('letterTypes', 'departments'));
+        $letterTypes = LetterType::paginate(6);
+        return view('letter-types.index',compact('letterTypes'));
     }
 
     public function show($id){

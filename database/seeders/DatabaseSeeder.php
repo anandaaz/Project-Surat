@@ -20,6 +20,11 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             LetterTypeSeeder::class,
             SuratCutiSeeder::class,
+            SuratIzinMPSeeder::class,
+            SuratPertukaranHKSeeder::class,
+            SuratPermohonanSCPSeeder::class,
+            SuratPenyimpanganKehadiranSeeder::class,
+            SuratPerintahLemburSeeder::class,
         ]);
     }
 }

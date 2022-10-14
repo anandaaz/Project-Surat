@@ -15,6 +15,12 @@ class CreateSuratPermohonSCPSTable extends Migration
     {
         Schema::create('surat_permohon_s_c_p_s', function (Blueprint $table) {
             $table->id();
+            $table->string('section');
+            $table->unsignedBigInteger('jumlah_hari');
+            $table->text('alasan');
+            $table->string('evidence')->nullable();
+            $table->foreignId('letter_type_id')->constrained('letter_types')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

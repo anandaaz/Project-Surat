@@ -18,9 +18,6 @@ class CreateLetterTypesTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('file_path')->nullable();
-            $table->text('html')->nullable();
-            $table->text('html_default')->nullable();
-            $table->foreignId('department_id')->constrained('departments')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });

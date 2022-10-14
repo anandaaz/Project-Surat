@@ -7,6 +7,7 @@ use App\Models\SuratCuti;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\File;
 
 class SuratCutiController extends Controller
 {
@@ -50,6 +51,19 @@ class SuratCutiController extends Controller
 
         SuratCuti::create($payload);
 
-        return redirect()->route('surat-cuti.index');
+        return redirect()->route('letters.cuti.index');
+    }
+
+    public function uploadEvidence(Request $request){
+        //
+    }
+
+    public function destroy($id){
+        $suratCuti = SuratCuti::with('user', 'user.department')->find($id);
+        
+        File::delete(public_path($suratCuti->evidence)); // delete old files
+        SuratCuti::find($id)->delete();
+
+        return redirect()->route('letters.cuti.index');
     }
 }
