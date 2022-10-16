@@ -58,8 +58,12 @@
 
                             <table class="table table-striped mt-2">
                                 <thead style="background-color:#6777ef">                                                       
-                                    <th style="color:#fff;">NPK</th>
-                                    <th style="color:#fff;">Nama</th>
+                                    
+                                     @if ($letterType !== '6')
+                                        <th style="color:#fff;">NPK</th>
+                                        <th style="color:#fff;">Nama</th>
+                                    @endif
+
                                     @if ($department == '%')
                                         <th style="color:#fff;">Department</th>
                                     @endif
@@ -75,11 +79,13 @@
                                 @else
                                     
                                     @forelse ($forms as $form)
-                                    <tr>                           
-                                        <td>{{ $form->npk }}</td>
-                                        <td>{{ $form->name }}</td>
+                                    <tr>            
+                                        @if ($letterType !== '6')
+                                            <td>{{ $form->npk }}</td>
+                                            <td>{{ $form->name }}</td>
+                                        @endif               
                                         @if ($department == '%')
-                                            <td>{{ $form->user->department->name }}</td>
+                                            <td>{{ $form->user->department->name ?? $form->department->name }}</td>
                                         @endif
                                        
                                         <td>   
@@ -88,6 +94,10 @@
                                                 {!! Form::submit('Download', ['class' => 'btn btn-primary']) !!}
                                             {!! Form::close() !!}
                                             {{-- <a class="btn btn-primary" href="{{ route('reports.download',[$form->evidence]) }}" target="_blank">Download Evidence</a> --}}
+                                        @if ($letterType == '6')
+                                            <a href="{{ route('letters.perintah-kerja-lembur.show-detail', $form->id) }}" class="btn btn-secondary text-dark">Detail</a>
+                                        @endif
+
                                         </td>
                                     </tr>
                                     @empty

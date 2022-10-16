@@ -72,11 +72,9 @@ class ReportController extends Controller
 
             case '6': // perintah kerja lembur
 
-                $forms = SuratPerintahLembur::leftJoin('users', function($join) {
-                            $join->on('surat_perintah_lemburs.user_id', '=', 'users.id');
-                         })->where('users.department_id', 'LIKE', $department)
+                $forms = SuratPerintahLembur::where('department_id', 'LIKE', $department)
                          ->where('surat_perintah_lemburs.evidence', '!=', 'null')
-                          ->with('user.department')
+                          ->with('department')
                          ->paginate(20);
                 break;
 
