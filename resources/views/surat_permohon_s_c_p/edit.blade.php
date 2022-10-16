@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading">Edit Department {{ $department->name }}</h3>
+            <h3 class="page__heading">Edit Form {{ $permohonanSCP->user->name }}</h3>
         </div>
         <div class="section-body">
             <div class="row">
@@ -23,18 +23,48 @@
                             </div>
                         @endif
 
-                    {!! Form::model($department, ['method' => 'PUT','route' => ['departments.update', $department->id]]) !!}
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <div class="form-group">
-                                <label for="">Name</label>                                    
-                                {!! Form::text('name', $department->name, array('class' => 'form-control')) !!}
-                            </div>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                        
+                    {!! Form::model($permohonanSCP, ['method' => 'PUT','route' => ['letters.permohonan-saldo-cuti-pengganti.update', $permohonanSCP->id], 'enctype' => 'multipart/form-data']) !!}
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+
+                    <div class="form-group">
+                        <label for="">NPK - Nama - Departments</label>  
+                        <input class="form-control" type="text" name="name" id="name" value="{{ $permohonanSCP->user->npk .'-'. $permohonanSCP->user->name . '-' .$permohonanSCP->user->department->name }}" readonly aria-readonly disabled>
+                                                        
                     </div>
+
+                    <div class="form-group">
+                        <label for="">Section</label>                                    
+                        {!! Form::text('section', null, array('class' => 'form-control',)) !!}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Jumlah Hari</label>                                    
+                        {!! Form::number('jumlah_hari', null, array('class' => 'form-control select2', 'style' => "width: 100%")) !!}
+                    </div>
+                   
+                    <div class="form-group">
+                        <label for="">Alasan</label>                                    
+                        {!! Form::textarea('alasan',null, array('class' => 'form-control', 'style' => "width: 100%; min-height:120px")) !!}
+                    </div>
+                    
+                     
+
+                    <div class="form-group">
+                        <label for="">File Evidence Saat Ini</label>                                  
+                        <br/>
+                        <a href="{{ route('letters.permohonan-saldo-cuti-pengganti.download', $permohonanSCP->id) }}">{{ $permohonanSCP->evidence ?? "belum ada file evidence yang diupload" }}</a>
+                    </div>
+
+                     <div class="form-group">
+                        <label for="">Ganti File Evidence</label>                                    
+                        {!! Form::file('evidence', null, array('class' => 'form-control select2', 'style' => "width: 100%")) !!}
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+            <button type="submit" class="btn btn-primary">Save</button>
                     {!! Form::close() !!}
 
                         </div>

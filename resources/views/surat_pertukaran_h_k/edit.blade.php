@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading">Edit Department {{ $department->name }}</h3>
+            <h3 class="page__heading">Edit Form Pertukaran Hari kerja {{ $pertukaranHK->user->name }}</h3>
         </div>
         <div class="section-body">
             <div class="row">
@@ -23,18 +23,107 @@
                             </div>
                         @endif
 
-                    {!! Form::model($department, ['method' => 'PUT','route' => ['departments.update', $department->id]]) !!}
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <div class="form-group">
-                                <label for="">Name</label>                                    
-                                {!! Form::text('name', $department->name, array('class' => 'form-control')) !!}
-                            </div>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                        
+                    {!! Form::model($pertukaranHK, ['method' => 'PUT','route' => ['letters.pertukaran-hari-kerja.update', $pertukaranHK->id], 'enctype' => 'multipart/form-data']) !!}
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <label for="">NPK - Nama - Departments</label>  
+                        <input class="form-control" type="text" name="name" id="name" value="{{ $pertukaranHK->user->npk .'-'. $pertukaranHK->user->name . '-' .$pertukaranHK->user->department->name }}" readonly aria-readonly disabled>
+                                          
                     </div>
+                    <div class="form-group">
+                        <label for="">Section</label>                                    
+                        {!! Form::text('section', null, array('class' => 'form-control',)) !!}
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-xs-6 col-sm-6 col-md-6"><label for="">Mulai Tanggal</label>                                    
+                            {!! Form::date('tanggal_kerja_start_date', null, array('class' => 'form-control', )) !!}
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <label for="">Berakhir Tanggal</label>                              
+                            {!! Form::date('tanggal_kerja_end_date', null, array('class' => 'form-control', )) !!}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-xs-6 col-sm-6 col-md-6"><label for="">Mulai Jam</label>                                    
+                            {!! Form::time('jam_kerja_start_time', null, array('class' => 'form-control', )) !!}
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <label for="">Sampai Jam</label>                              
+                            {!! Form::time('jam_kerja_end_time', null, array('class' => 'form-control', )) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <label for="">Jumlah Hari Kerja</label>
+                            {!! Form::number('jumlah_kerja', null, array('class' => 'form-control')) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <label for="kondisi_kerja">Kondisi Kerja</label>
+                            {!! Form::select('kondisi_kerja', ['Masuk', 'Libur'], 'Masuk', array('class' => 'form-control')) !!}
+                        </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="form-group row">
+                        <div class="col-xs-6 col-sm-6 col-md-6"><label for="">Tanggal Pertukaran</label>                                    
+                            {!! Form::date('tanggal_pertukaran_start_date', null, array('class' => 'form-control', )) !!}
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <label for="">Sampai Tanggal</label>                              
+                            {!! Form::date('tanggal_pertukaran_end_date', null, array('class' => 'form-control', )) !!}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-xs-6 col-sm-6 col-md-6"><label for="">Mulai Jam</label>                                    
+                            {!! Form::time('jam_pertukaran_start_time', null, array('class' => 'form-control', )) !!}
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <label for="">Sampai Jam</label>                              
+                            {!! Form::time('jam_pertukaran_end_time', null, array('class' => 'form-control', )) !!}
+                        </div>
+                    </div>
+
+                     <div class="form-group row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <label for="">Jumlah Hari Pertukaran</label>
+                            {!! Form::number('jumlah_pertukaran', null, array('class' => 'form-control')) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <label for="kondisi_pertukaran">Kondisi Pertukaran</label>
+                            {!! Form::select('kondisi_pertukaran', ['Masuk', 'Libur'], 'Masuk', array('class' => 'form-control')) !!}
+                        </div>
+                    </div>
+    
+                    <div class="form-group row">
+                        <div class="col-xs-12 col-sm-12 col">
+                            <label for="alasan">Alasan</label>                                    
+                            {!! Form::textarea('alasan',null, array('class' => 'form-control', 'style' => "width: 100%; min-height:120px")) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">File Evidence Saat Ini</label>                                  
+                        <br/>
+                        <a href="{{ route('letters.pertukaran-hari-kerja.download', $pertukaranHK->id) }}">{{ $pertukaranHK->evidence ?? "belum ada file evidence yang diupload" }}</a>
+                    </div>
+
+                     <div class="form-group">
+                        <label for="">Ganti File Evidence</label>                                    
+                        {!! Form::file('evidence', null, array('class' => 'form-control select2', 'style' => "width: 100%")) !!}
+                    </div>
+                </div>
+            </div>
+           
+            <button type="submit" class="btn btn-primary">Save</button>
                     {!! Form::close() !!}
 
                         </div>

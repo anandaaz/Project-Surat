@@ -16,8 +16,8 @@ class CreateSuratPenyimpanganKehadiransTable extends Migration
         Schema::create('surat_penyimpangan_kehadirans', function (Blueprint $table) {
             $table->id();
             $table->string('section');
-            $table->string('jadwal_start')->nullable();
-            $table->string('jadwal_end')->nullable();
+            $table->date('jadwal_start')->nullable();
+            $table->date('jadwal_end')->nullable();
             $table->enum('jenis_penyimpangan', ['Terlambat Hadir', 'Pulang Lebih Awal', 'Tidak Absen'])->nullable();
             $table->time('jam_masuk')->nullable();
             $table->time('jam_pulang')->nullable();

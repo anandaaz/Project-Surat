@@ -5,6 +5,9 @@
         <div class="section-header">
             <h3 class="page__heading">Form Surat Penyimpangan Kehadiran</h3>
         </div>
+
+        @include('layouts.partials.alert')
+
          @if ($errors->any())                                                
             <div class="alert alert-dark alert-dismissible fade show" role="alert">
             <strong>Error!</strong>                        
@@ -24,11 +27,11 @@
                         <div class="card-body">
                             <div class="row flex justify-content-between">
                                 <div class="d-flex">
-                                    <a class="btn btn-warning" data-toggle="modal" data-target="#modalCreateCutiForm" title="Klik untuk mengajukan form pertukaran hari kerja.">Tambahkan Form Surat Penyimpangan Kehadiran</a>                        
+                                    <a class="btn btn-primary" data-toggle="modal" data-target="#modalCreateCutiForm" title="Klik untuk mengajukan form pertukaran hari kerja.">Tambahkan Form Surat Penyimpangan Kehadiran</a>                        
                                 </div>
                                 
                                 <div class="d-flex">
-                                    <a href="{{ route('letter-types.download', 5) }}" class="btn btn-secondary mr-auto" title="Click to add a new department.">Download Template Form</a>                        
+                                    <a href="{{ route('letter-types.download', 5) }}" class="btn btn-secondary mr-auto" title="Click to Download Template Form.">Download Template Form</a>                        
                                 </div>
 
                             </div>
@@ -54,22 +57,25 @@
                                     <td>{{ $penyimpanganKehadiran->jenis_penyimpangan}}</td>
                                     <td>{{ $penyimpanganKehadiran->jam_masuk ?? ' - ' }}</td>
                                     <td>{{ $penyimpanganKehadiran->jam_pulang ?? ' - '}}</td>
-                                    <td class="p-1">   
-                                        <a class="btn btn-success mb-1" href="{{ route('letters.penyimpangan-kehadiran.download',[$penyimpanganKehadiran->user->department->id, $penyimpanganKehadiran->id]) }}">Download</a>
+                                    <td class="p-1"> 
+                                        @if ($penyimpanganKehadiran->evidence !== null)
+
+                                        <a class="btn btn-success mb-1" href="{{ route('letters.penyimpangan-kehadiran.download',[$penyimpanganKehadiran->id]) }}">Download</a>
                                         <br/>
-                                        <a class="btn btn-primary mb-1" href="{{ route('letters.penyimpangan-kehadiran.show',$penyimpanganKehadiran->id) }}">Detail</a>
+                                        @endif 
+
+                                        
+                                        @if (request()->user()->hasRole('Admin') || request()->user()->id === $penyimpanganKehadiran->user->id)
+
+                                        <a class="btn btn-info mb-1" href="{{ route('letters.penyimpangan-kehadiran.edit',$penyimpanganKehadiran->id) }}">{{ $penyimpanganKehadiran->evidence == null ? 'Upload Evidence' : 'Edit' }}</a>
+                                       
                                         <br/>
                                         
-                                        @can('edit-department')
-                                        <a class="btn btn-info mb-1" href="{{ route('letters.penyimpangan-kehadiran.edit',$penyimpanganKehadiran->id) }}">Edit</a>
-                                        @endcan
-                                        <br/>
                                         
-                                        @can('delete-department')
                                             {!! Form::open(['method' => 'DELETE','route' => ['letters.penyimpangan-kehadiran.destroy', $penyimpanganKehadiran->id],'style'=>'display:inline']) !!}
                                                 {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
                                             {!! Form::close() !!}
-                                        @endcan
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
@@ -77,7 +83,9 @@
                             </table>
 
                             <div class="pagination justify-content-end">
+                                @role('Admin')
                                 {!! $suratPenyimpanganKehadiran->links() !!} 
+                                @endrole
                             </div>                    
                             </div>
                         </div>

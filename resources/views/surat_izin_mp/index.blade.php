@@ -5,6 +5,9 @@
         <div class="section-header">
             <h4 class="page__heading">Form Surat Izin Meninggalkan Pekerjaan</h4>
         </div>
+
+        @include('layouts.partials.alert')
+
          @if ($errors->any())                                                
             <div class="alert alert-dark alert-dismissible fade show" role="alert">
             <strong>Error!</strong>                        
@@ -24,56 +27,64 @@
                         <div class="card-body">
                             <div class="row flex justify-content-between">
                                 <div class="d-flex">
-                                    <a class="btn btn-warning" data-toggle="modal" data-target="#modalCreateCutiForm" title="Klik untuk mengajukan form cuti.">Tambahkan Form Izin Meninggalkan Pekerjaan</a>                        
+                                    <a class="btn btn-primary" data-toggle="modal" data-target="#modalCreateCutiForm" title="Klik untuk mengajukan form cuti.">Tambahkan Form Izin Meninggalkan Pekerjaan</a>                        
                                 </div>
                                 
                                 <div class="d-flex">
-                                    <a href="{{ route('letter-types.download', 4) }}" class="btn btn-secondary text-dark" title="Click to download Form.">Download Template Form</a>                        
+                                    <a href="{{ route('letter-types.download', 1) }}" class="btn btn-secondary text-dark" title="Click to download Form.">Download Template Form</a>                        
                                 </div>
 
                             </div>
                             
                             <hr/>
                         
+                            <div class="table-respon">
                             <table class="table table-striped mt-2">
                                 <thead style="background-color:#6777ef">                                                       
                                     <th style="color:#fff;">NPK</th>
                                     <th style="color:#fff;">Nama</th>
+                                    <th style="color:#fff;">Section</th>
                                     <th style="color:#fff;">Department</th>
                                     <th style="color:#fff;">Berangkat</th>
                                     <th style="color:#fff;">Kembali</th>
+                                    <th style="color:#fff;">Keperluan</th>
                                     <th style="color:#fff;">Actions</th>
                                 </thead>  
                                 <tbody>
                                 @foreach ($suratIzinMP as $izinMP)
                                 <tr>                           
                                     <td>{{ $izinMP->user->npk }}</td>
-                                    <td>{{ $izinMP->user->name }}</td>
+                                    <td>{{ $izinMP->user->name  }}</td>
+                                    <td>{{ $izinMP->section }}</td>
                                     <td>{{ $izinMP->user->department->name }}</td>
                                     <td>{{ $izinMP->berangkat }}</td>
                                     <td>{{ $izinMP->kembali }}</td>
-                                    <td class="p-1">   
-                                        <a class="btn btn-success mb-1" href="{{ route('letters.izin-meninggalkan-pekerjaan.download',[$izinMP->user->department->id, $izinMP->id]) }}">Download</a>
-                                        <br/>
-                                        <a class="btn btn-primary mb-1" href="{{ route('letters.izin-meninggalkan-pekerjaan.show',$izinMP->id) }}">Detail</a>
+                                    <td>{{ $izinMP->keperluan }}</td>
+                                    <td class="p-1">  
+                                        @if ($izinMP->evidence !== null)
+                                            <a class="btn btn-success mb-1" href="{{ route('letters.izin-meninggalkan-pekerjaan.download',[$izinMP->id]) }}">Download</a>
+                                        @endif 
                                         <br/>
                                         
-                                        @can('edit-surat-izin-mp')
-                                        <a class="btn btn-info mb-1" href="{{ route('letters.izin-meninggalkan-pekerjaan.edit',$izinMP->id) }}">Edit</a>
-                                        @endcan
-                                        <br/>
+                                        @if (request()->user()->hasRole('Admin') || request()->user()->id === $izinMP->user->id)
+                                            
+                                        <a class="btn btn-info mb-1" href="{{ route('letters.izin-meninggalkan-pekerjaan.edit',$izinMP->id) }}">{{ $izinMP->evidence == null ? 'Upload Evidence' : 'Edit' }}</a>
+                                        <br/>   
                                         
                                             {!! Form::open(['method' => 'DELETE','route' => ['letters.izin-meninggalkan-pekerjaan.destroy', $izinMP->id],'style'=>'display:inline']) !!}
-                                                {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                            {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
                                             {!! Form::close() !!}
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
                                 </tbody>               
                             </table>
-
+                        </div>
                             <div class="pagination justify-content-end">
+                                @role('Admin')
                                 {!! $suratIzinMP->links() !!} 
+                                @endrole
                             </div>                    
                             </div>
                         </div>

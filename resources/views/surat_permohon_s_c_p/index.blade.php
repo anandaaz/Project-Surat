@@ -5,6 +5,9 @@
         <div class="section-header">
             <h3 class="page__heading">Form Surat Permohonan Saldo Cuti Pengganti</h3>
         </div>
+
+        @include('layouts.partials.alert')
+
          @if ($errors->any())                                                
             <div class="alert alert-dark alert-dismissible fade show" role="alert">
             <strong>Error!</strong>                        
@@ -50,22 +53,23 @@
                                     <td>{{ $permohonanSCP->user->name }}</td>
                                     <td>{{ $permohonanSCP->user->department->name }}</td>
                                     <td>{{ $permohonanSCP->jumlah_hari }}</td>
-                                    <td class="p-1">   
-                                        <a class="btn btn-success mb-1" href="{{ route('letters.permohonan-saldo-cuti-pengganti.download',[$permohonanSCP->user->department->id, $permohonanSCP->id]) }}">Download</a>
+                                    <td class="p-1"> 
+                                        @if ($permohonanSCP->evidence !== null)  
+                                        <a class="btn btn-success mb-1" href="{{ route('letters.permohonan-saldo-cuti-pengganti.download',[$permohonanSCP->id]) }}">Download</a>
                                         <br/>
-                                        <a class="btn btn-primary mb-1" href="{{ route('letters.permohonan-saldo-cuti-pengganti.show',$permohonanSCP->id) }}">Detail</a>
+                                        @endif
+                                       
+                                        
+                                        @if (request()->user()->hasRole('Admin') || request()->user()->id === $permohonanSCP->user->id)
+
+                                        <a class="btn btn-info mb-1" href="{{ route('letters.permohonan-saldo-cuti-pengganti.edit',$permohonanSCP->id) }}">{{ $permohonanSCP->evidence == null ? 'Upload Evidence' : 'Edit' }}</a>
+                                       
                                         <br/>
                                         
-                                        @can('edit-department')
-                                        <a class="btn btn-info mb-1" href="{{ route('letters.permohonan-saldo-cuti-pengganti.edit',$permohonanSCP->id) }}">Edit</a>
-                                        @endcan
-                                        <br/>
-                                        
-                                        @can('delete-department')
                                             {!! Form::open(['method' => 'DELETE','route' => ['letters.permohonan-saldo-cuti-pengganti.destroy', $permohonanSCP->id],'style'=>'display:inline']) !!}
                                                 {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
                                             {!! Form::close() !!}
-                                        @endcan
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
@@ -73,7 +77,9 @@
                             </table>
 
                             <div class="pagination justify-content-end">
+                                @role('Admin')
                                 {!! $suratPermohonSCP->links() !!} 
+                                @endrole
                             </div>                    
                             </div>
                         </div>

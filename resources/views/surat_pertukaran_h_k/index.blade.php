@@ -5,6 +5,9 @@
         <div class="section-header">
             <h3 class="page__heading">Form Surat Pertukaran Hari Kerja</h3>
         </div>
+
+        @include('layouts.partials.alert')
+
          @if ($errors->any())                                                
             <div class="alert alert-dark alert-dismissible fade show" role="alert">
             <strong>Error!</strong>                        
@@ -24,58 +27,64 @@
                         <div class="card-body">
                             <div class="row flex justify-content-between">
                                 <div class="d-flex">
-                                    <a class="btn btn-warning" data-toggle="modal" data-target="#modalCreateCutiForm" title="Klik untuk mengajukan form pertukaran hari kerja.">Tambahkan Form Pertukaran Hari Kerja</a>                        
+                                    <a class="btn btn-primary" data-toggle="modal" data-target="#modalCreateCutiForm" title="Klik untuk mengajukan form pertukaran hari kerja.">Tambahkan Form Pertukaran Hari Kerja</a>                        
                                 </div>
                                 
                                 <div class="d-flex">
-                                    <a href="{{ route('letter-types.download', 4) }}" class="btn btn-secondary mr-auto" title="Click to add a new department.">Download Template Form</a>                        
+                                    <a href="{{ route('letter-types.download', 3) }}" class="btn btn-secondary mr-auto" title="Click to download template pertukaran hari kerja.">Download Template Form</a>                        
                                 </div>
 
                             </div>
                             
                             <hr/>
                         
-                            <table class="table table-striped mt-2">
-                                <thead style="background-color:#6777ef">                                                       
-                                    <th style="color:#fff;">NPK</th>
-                                    <th style="color:#fff;">Nama</th>
-                                    <th style="color:#fff;">Department</th>
-                                    <th style="color:#fff;">Tanggal Kerja</th>
-                                    <th style="color:#fff;">Tanggal Pertukaran</th>
-                                    <th style="color:#fff;">Actions</th>
-                                </thead>  
-                                <tbody>
-                                @foreach ($suratPertukaranHK as $pertukaranHK)
-                                <tr>                           
-                                    <td>{{ $pertukaranHK->user->npk }}</td>
-                                    <td>{{ $pertukaranHK->user->name }}</td>
-                                    <td>{{ $pertukaranHK->user->department->name }}</td>
-                                    <td>{{ $pertukaranHK->tanggal_kerja }}</td>
-                                    <td>{{ $pertukaranHK->tanggal_pertukaran }}</td>
-                                    <td class="p-1">   
-                                        <a class="btn btn-success mb-1" href="{{ route('letters.pertukaran-hari-kerja.download',[$pertukaranHK->user->department->id, $pertukaranHK->id]) }}">Download</a>
-                                        <br/>
-                                        <a class="btn btn-primary mb-1" href="{{ route('letters.pertukaran-hari-kerja.show',$pertukaranHK->id) }}">Detail</a>
-                                        <br/>
+                            <div class="table-responsive">
+                                
+                                <table class="table table-striped mt-2">
+                                    <thead style="background-color:#6777ef">                                                       
+                                        <th style="color:#fff;">NPK</th>
+                                        <th style="color:#fff;">Nama</th>
+                                        <th style="color:#fff;">Department</th>
+                                        <th style="color:#fff;">Tanggal Kerja</th>
+                                        <th style="color:#fff;">Tanggal Pertukaran</th>
+                                        <th style="color:#fff;">Actions</th>
+                                    </thead>  
+                                    <tbody>
+                                    @foreach ($suratPertukaranHK as $pertukaranHK)
+                                    <tr>                           
+                                        <td>{{ $pertukaranHK->user->npk }}</td>
+                                        <td>{{ $pertukaranHK->user->name }}</td>
+                                        <td>{{ $pertukaranHK->user->department->name }}</td>
+                                        <td>{{ $pertukaranHK->tanggal_kerja }}</td>
+                                        <td>{{ $pertukaranHK->tanggal_pertukaran }}</td>
+                                        <td class="p-1">  
+                                            <a class="btn btn-secondary text-dark mb-1" href="{{ route('letters.pertukaran-hari-kerja.show',[ $pertukaranHK->id]) }}">Detail</a>
+                                            <br/>
+                                            @if ($pertukaranHK->evidence !== null) 
+                                                <a class="btn btn-success mb-1" href="{{ route('letters.pertukaran-hari-kerja.download',[$pertukaranHK->id]) }}">Download</a>
+                                                <br/>
+                                            @endif
+                                    
+                                            @if (request()->user()->hasRole('Admin') || request()->user()->id === $pertukaranHK->user->id)
+
+                                            <a class="btn btn-info mb-1" href="{{ route('letters.pertukaran-hari-kerja.edit',$pertukaranHK->id) }}">{{ $pertukaranHK->evidence == null ? 'Upload Evidence' : 'Edit' }}</a>
+                                            <br/>
                                         
-                                        @can('edit-department')
-                                        <a class="btn btn-info mb-1" href="{{ route('letters.pertukaran-hari-kerja.edit',$pertukaranHK->id) }}">Edit</a>
-                                        @endcan
-                                        <br/>
-                                        
-                                        @can('delete-department')
                                             {!! Form::open(['method' => 'DELETE','route' => ['letters.pertukaran-hari-kerja.destroy', $pertukaranHK->id],'style'=>'display:inline']) !!}
                                                 {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
                                             {!! Form::close() !!}
-                                        @endcan
-                                    </td>
-                                </tr>
-                                @endforeach
-                                </tbody>               
-                            </table>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                    </tbody>               
+                                </table>
+                        </div>
 
                             <div class="pagination justify-content-end">
-                                {!! $suratPertukaranHK->links() !!} 
+                               @role('Admin')
+                               {!! $suratPertukaranHK->links() !!} 
+                               @endrole
                             </div>                    
                             </div>
                         </div>

@@ -17,8 +17,8 @@ class CreateSuratCutisTable extends Migration
             $table->id();
             $table->string('section');
             $table->unsignedSmallInteger('lama_cuti');
-            $table->timestamp('cuti_start_date');
-            $table->timestamp('cuti_end_date');
+            $table->date('cuti_start_date');
+            $table->date('cuti_end_date');
             $table->text('keperluan');
             $table->enum('kategori_cuti', [
                 'Cuti Tahunan', 

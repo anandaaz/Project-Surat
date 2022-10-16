@@ -5,6 +5,7 @@
         <div class="section-header">
             <h3 class="page__heading">Form Surat Cuti</h3>
         </div>
+        @include('layouts.partials.alert')
          @if ($errors->any())                                                
             <div class="alert alert-dark alert-dismissible fade show" role="alert">
             <strong>Error!</strong>                        
@@ -23,61 +24,60 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row flex justify-content-between">
-                                @can('create-department')
                                 <div class="d-flex">
-                                    <a class="btn btn-warning" data-toggle="modal" data-target="#modalCreateCutiForm" title="Klik untuk mengajukan form cuti.">Tambahkan Form Cuti</a>                        
+                                    <a class="btn btn-primary" data-toggle="modal" data-target="#modalCreateCutiForm" title="Klik untuk mengajukan form cuti.">Tambahkan Form Cuti</a>                        
                                 </div>
-                                @endcan
                                 
                                 <div class="d-flex">
-                                    <a href="{{ route('letter-types.download', 4) }}" class="btn btn-secondary mr-auto" title="Click to add a new department.">Download Template Form Cuti</a>                        
+                                    <a href="{{ route('letter-types.download', 2) }}" class="btn btn-secondary mr-auto" title="Click to download template form cuti.">Download Template Form Cuti</a>                        
                                 </div>
-
                             </div>
                             
                             <hr/>
                         
-                            <table class="table table-striped mt-2">
-                                <thead style="background-color:#6777ef">                                                       
-                                    <th style="color:#fff;">NPK</th>
-                                    <th style="color:#fff;">Nama</th>
-                                    <th style="color:#fff;">Department</th>
-                                    <th style="color:#fff;">Tanggal</th>
-                                    <th style="color:#fff;">Lama Cuti</th>
-                                    <th style="color:#fff;">Actions</th>
-                                </thead>  
-                                <tbody>
-                                @foreach ($suratCuti as $cuti)
-                                <tr>                           
-                                    <td>{{ $cuti->user->npk }}</td>
-                                    <td>{{ $cuti->user->name }}</td>
-                                    <td>{{ $cuti->user->department->name }}</td>
-                                    <td>{{ $cuti->tanggal_evidence ?? '' }}</td>
-                                    <td>{{ $cuti->lama_cuti }}</td>
-                                    <td class="p-1">   
-                                        <a class="btn btn-success mb-1" href="{{ route('letters.cuti.download',[$cuti->user->department->id, $cuti->id]) }}">Download</a>
-                                        <br/>
-                                        <a class="btn btn-primary mb-1" href="{{ route('letters.cuti.show',$cuti->id) }}">Detail</a>
-                                        <br/>
-                                        
-                                        @can('edit-department')
-                                        <a class="btn btn-info mb-1" href="{{ route('letters.cuti.edit',$cuti->id) }}">Edit</a>
-                                        @endcan
-                                        <br/>
-                                        
-                                        @can('delete-department')
-                                            {!! Form::open(['method' => 'DELETE','route' => ['letters.cuti.destroy', $cuti->id],'style'=>'display:inline']) !!}
-                                                {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                                            {!! Form::close() !!}
-                                        @endcan
-                                    </td>
-                                </tr>
-                                @endforeach
-                                </tbody>               
-                            </table>
+                            <div class="table-responsive">
+                                <table class="table table-striped mt-2">
+                                    <thead style="background-color:#6777ef">                                                       
+                                        <th style="color:#fff;">NPK</th>
+                                        <th style="color:#fff;">Nama</th>
+                                        <th style="color:#fff;">Department</th>
+                                        <th style="color:#fff;">Tanggal</th>
+                                        <th style="color:#fff;">Lama Cuti</th>
+                                        <th style="color:#fff;">Actions</th>
+                                    </thead>  
+                                    <tbody>
+                                    @foreach ($suratCuti as $cuti)
+                                    <tr>                           
+                                        <td>{{ $cuti->user->npk }}</td>
+                                        <td>{{ $cuti->user->name }}</td>
+                                        <td>{{ $cuti->user->department->name }}</td>
+                                        <td>{{ $cuti->cuti_start_date . ' - ' . $cuti->cuti_end_date }}</td>
+                                        <td>{{ $cuti->lama_cuti }} Hari</td>
+                                        <td class="p-1">
+                                            @if ($cuti->evidence !== null)   
+                                            <a class="btn btn-success mb-1" href="{{ route('letters.cuti.download',[$cuti->user->department->id, $cuti->id]) }}">Download</a>
+                                            <br/>
+                                            @endif 
+                                            
+                                            @if (request()->user()->hasRole('Admin') || request()->user()->id === $cuti->user->id)
+                                            <a class="btn btn-info mb-1" href="{{ route('letters.cuti.edit',$cuti->id) }}">{{ $cuti->evidence == null ? 'Upload Evidence' : 'Edit' }}</a>
+                                            <br/>
+                                           
+                                                {!! Form::open(['method' => 'DELETE','route' => ['letters.cuti.destroy', $cuti->id],'style'=>'display:inline']) !!}
+                                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                                {!! Form::close() !!}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                    </tbody>               
+                                </table>
+                            </div>
 
                             <div class="pagination justify-content-end">
+                                @role('Admin')
                                 {!! $suratCuti->links() !!} 
+                                @endrole
                             </div>                    
                             </div>
                         </div>

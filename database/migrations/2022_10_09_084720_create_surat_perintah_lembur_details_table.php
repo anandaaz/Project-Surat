@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSuratPerintahLembursTable extends Migration
+class CreateSuratPerintahLemburDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateSuratPerintahLembursTable extends Migration
      */
     public function up()
     {
-        Schema::create('surat_perintah_lemburs', function (Blueprint $table) {
+        Schema::create('surat_perintah_lembur_details', function (Blueprint $table) {
             $table->id();
-            $table->date('waktu')->nullable();
+            $table->foreignId('surat_perintah_lembur_id')->constrained('surat_perintah_lemburs')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('section')->nullable();
             $table->text('pekerjaan')->nullable();
-            $table->timestamp('jadwal_kerja')->nullable();
+            $table->time('jadwal_kerja_start')->nullable();
+            $table->time('jadwal_kerja_to')->nullable();
             $table->time('rencana_lembur_start')->nullable();
             $table->time('rencana_lembur_to')->nullable();
             $table->time('aktual_lembur_start')->nullable();
@@ -27,8 +28,6 @@ class CreateSuratPerintahLembursTable extends Migration
             $table->unsignedBigInteger('personal_check_jml')->nullable();
             $table->unsignedBigInteger('personal_check_tul')->nullable();
             $table->text('personal_check_ket')->nullable();
-            $table->string('evidence')->nullable();
-            $table->foreignId('letter_type_id')->constrained('letter_types')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
@@ -41,6 +40,6 @@ class CreateSuratPerintahLembursTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('surat_perintah_lemburs');
+        Schema::dropIfExists('surat_perintah_lembur_details');
     }
 }

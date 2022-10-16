@@ -16,14 +16,16 @@ class CreateSuratPertukaranHKSTable extends Migration
         Schema::create('surat_pertukaran_h_k_s', function (Blueprint $table) {
             $table->id();
             $table->string('section');
-            $table->string('tanggal_kerja');
-            $table->time('jadwal_kerja_start_time');
-            $table->time('jadwal_kerja_end_time');
+            $table->date('tanggal_kerja_start_date');
+            $table->date('tanggal_kerja_end_date');
+            $table->time('jam_kerja_start_time');
+            $table->time('jam_kerja_end_time');
             $table->unsignedSmallInteger('jumlah_kerja');
             $table->enum('kondisi_kerja', ['Masuk', 'Libur']);
-            $table->string('tanggal_pertukaran');
-            $table->time('jadwal_pertukaran_start_time');
-            $table->time('jadwal_pertukaran_end_time');
+            $table->date('tanggal_pertukaran_start_date');
+            $table->date('tanggal_pertukaran_end_date');
+            $table->time('jam_pertukaran_start_time');
+            $table->time('jam_pertukaran_end_time');
             $table->unsignedSmallInteger('jumlah_pertukaran');
             $table->enum('kondisi_pertukaran', ['Masuk', 'Libur']);
             $table->text('alasan');

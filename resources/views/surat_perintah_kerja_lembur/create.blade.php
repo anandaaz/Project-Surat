@@ -49,7 +49,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading">Edit Form Perintah Kerja Lembur</h3>
+            <h3 class="page__heading">Tambah Form Perintah Kerja Lembur</h3>
         </div>
         <div class="section-body">
             <div class="row">
@@ -61,11 +61,11 @@
                               <div class="stepwizard-row setup-panel">
                                 <div class="stepwizard-step">
                                   <a href="#step-1" type="button" class="btn btn-primary btn-circle">1</a>
-                                  <p>Identitas Surat</p>
+                                  <p>Step 1</p>
                                 </div>
                                 <div class="stepwizard-step">
-                                  <a href="{{ route('letters.perintah-kerja-lembur.edit-detail', $suratPerintahLembur->id) }}" type="button" class="btn btn-secondary btn-circle">2</a>
-                                  <p>Detail Surat</p>
+                                  <a href="#step-2" type="button" class="btn btn-secondary btn-circle" disabled="disabled">2</a>
+                                  <p>Step 2</p>
                                 </div>
                               </div>
                             </div>
@@ -88,8 +88,8 @@
                             <div class="col-xs-6 col-sm-6 col-md-6">
         
                               <div class="form-group">
-                                  <label for="">Hari/Tanggal</label>
-                                  {!! Form::date('waktu', $suratPerintahLembur->waktu, ['class' => 'form-control']) !!}
+                                  <label for="">Hari/Tanggal</label>  
+                                  {!! Form::date('waktu', '', ['class' => 'form-control']) !!}
                               </div>
 
                             </div>
@@ -97,19 +97,13 @@
                             <div class="col-xs-6 col-sm-6 col-md-6">
                               <div class="form-group">
                                   <label for="">Departments</label>  
-                                  {!! Form::select('department_id', $departments, $suratPerintahLembur->department_id, ['class' => 'form-control select2']) !!}                               
+                                  {!! Form::select('department_id', $departments, [], ['class' => 'form-control select2']) !!}                               
                               </div>
                             </div>
                             
                             <div class="col-xs-12 col-sm-12 col-md-12 ">
                               <div class="form-group">
-                                  <label for="">File Evidence Saat Ini :</label> <br/>                                   
-                                  <a href="{{ route('letters.perintah-kerja-lembur.download', $suratPerintahLembur->id) }}">{{ $suratPerintahLembur->evidence }}</a>
-                              </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 ">
-                              <div class="form-group">
-                                  <label for="">Ganti File Evidence</label> <br/>                                   
+                                  <label for="">File Evidence</label> <br/>                                   
                                   <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="customFileLang" name="evidence" lang="id">
                                     <label class="custom-file-label text-danger" for="customFileLang">format file: docx, pdf | maksimal 10mb </label>

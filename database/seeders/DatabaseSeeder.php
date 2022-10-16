@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             SuratPermohonanSCPSeeder::class,
             SuratPenyimpanganKehadiranSeeder::class,
             SuratPerintahLemburSeeder::class,
+            SuratPerintahLemburDetailSeeder::class,
         ]);
     }
 }
