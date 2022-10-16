@@ -28,13 +28,14 @@
                         <td>Evidence</td>
                         <td>: <a href="#">{{ $suratPerintahLembur->evidence }}</a> </td>
                       </tr>
-                      @role('Admin'|'Supervisor'|'Operator'|'Foreman'|'Manager'|'Leader')
+                      
+                      @unlessrole('Operator')
                       <tr align="right" style="width: 100% !important;">
                         <td align="right">
                           <a href="{{ route('letters.perintah-kerja-lembur.edit', $suratPerintahLembur->id) }}" class="btn btn-primary">Edit</a>
                         </td>
                       </tr>
-                      @endrole()
+                      @endunlessrole
                      </table>
                     </div>
                     <div class="card-body">

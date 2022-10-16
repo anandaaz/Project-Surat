@@ -99,8 +99,7 @@ class SuratCutiController extends Controller
         return redirect()->route('letters.cuti.index')->with('success', 'Berhasil Memperbaruhi Form');
     }
 
-     public function handleUploadFile($request)
-    {
+    public function handleUploadFile($request) {
         $user = request()->user();
         $file = $request->file('evidence');
         $name = hexdec(uniqid()) . '-' . $user->name . '.' . $file->getClientOriginalExtension();
@@ -156,12 +155,10 @@ class SuratCutiController extends Controller
     public function download($id){
         $activeUser = request()->user();
         $suratCuti = SuratCuti::with('user')->find($id);
-        dd($suratCuti);
         
-        if(($activeUser->department_id !== $suratCuti->user->department_id) && $activeUser->hasRole('Admin','Manager','Supervisor','Leader','Foreman', 'OPerator')){
+        if(($activeUser->department_id !== $suratCuti->user->department_id) && $activeUser->hasRole('Admin','Manager','Supervisor','Leader','Foreman', 'Operator')){
             abort(403);
         }
-
         $path = $suratCuti->evidence ? public_path($suratCuti->evidence) : null;
         
         if(File::exists($path)){

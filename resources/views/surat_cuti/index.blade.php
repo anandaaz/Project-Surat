@@ -55,7 +55,7 @@
                                         <td>{{ $cuti->lama_cuti }} Hari</td>
                                         <td class="p-1">
                                             @if ($cuti->evidence !== null)   
-                                            <a class="btn btn-success mb-1" href="{{ route('letters.cuti.download',[$cuti->user->department->id, $cuti->id]) }}">Download</a>
+                                            <a class="btn btn-success mb-1" href="{{ route('letters.cuti.download',[$cuti->id]) }}">Download</a>
                                             <br/>
                                             @endif 
                                             
