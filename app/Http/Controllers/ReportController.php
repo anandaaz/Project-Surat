@@ -27,7 +27,7 @@ class ReportController extends Controller
                             $join->on('surat_izin_m_p_s.user_id', '=', 'users.id');
                          })->where('users.department_id', 'LIKE', $department)
                          ->where('surat_izin_m_p_s.evidence', '!=', 'null')
-                         ->with('user.department')
+                         ->with('user.department')->orderBy('surat_izin_m_p_s.created_at', 'DESC')
                          ->paginate(20);
                 break;
 
@@ -37,7 +37,7 @@ class ReportController extends Controller
                             $join->on('surat_cutis.user_id', '=', 'users.id');
                          })->where('users.department_id', 'LIKE', $department)
                         ->where('surat_cutis.evidence', '!=', 'null')
-                         ->with('user.department')
+                         ->with('user.department')->orderBy('surat_cutis.created_at', 'DESC')
                         ->paginate(20);
                 break;
             case '3': // pertukaran hari kerja
@@ -46,7 +46,7 @@ class ReportController extends Controller
                             $join->on('surat_pertukaran_h_k_s.user_id', '=', 'users.id');
                          })->where('users.department_id', 'LIKE', $department)
                          ->where('surat_pertukaran_h_k_s.evidence', '!=', 'null')
-                          ->with('user.department')
+                          ->with('user.department')->orderBy('surat_pertukaran_h_k_s.created_at', 'DESC')
                          ->paginate(20);
                 break;
 
@@ -56,7 +56,7 @@ class ReportController extends Controller
                             $join->on('surat_permohon_s_c_p_s.user_id', '=', 'users.id');
                          })->where('users.department_id', 'LIKE', $department)
                          ->where('surat_permohon_s_c_p_s.evidence', '!=', 'null')
-                          ->with('user.department')
+                          ->with('user.department')->orderBy('surat_permohon_s_c_p_s.created_at', 'DESC')
                          ->paginate(20);
                 break;
 
@@ -66,7 +66,7 @@ class ReportController extends Controller
                             $join->on('surat_penyimpangan_kehadirans.user_id', '=', 'users.id');
                          })->where('users.department_id', 'LIKE', $department)
                          ->where('surat_penyimpangan_kehadirans.evidence', '!=', 'null')
-                          ->with('user.department')
+                          ->with('user.department')->orderBy('surat_penyimpangan_kehadirans.created_at', 'DESC')
                          ->paginate(20);
                 break;
 
@@ -74,7 +74,7 @@ class ReportController extends Controller
 
                 $forms = SuratPerintahLembur::where('department_id', 'LIKE', $department)
                          ->where('surat_perintah_lemburs.evidence', '!=', 'null')
-                          ->with('department')
+                          ->with('department')->orderBy('surat_perintah_lemburs.created_at', 'DESC')
                          ->paginate(20);
                 break;
 

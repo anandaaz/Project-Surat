@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-  CKEditor
+  Upload Template Form
 @endsection
 
 @section('css')
@@ -84,15 +84,4 @@ thead td, thead th {
       </div>
   </div>
 </section>
-@endsection
-
-@section('page_js')
-<script src="{{ asset('js/ckeditor-4-19/ckeditor.js') }}"></script>
-@endsection
-
-@section('scripts')
-<script>
-  CKEDITOR.replace('html');
-  CKEDITOR.config.height = 1350;
-</script>
 @endsection

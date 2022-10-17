@@ -5,6 +5,9 @@
         <div class="section-header">
             <h3 class="page__heading">Jenis Form</h3>
         </div>
+
+        @include('layouts.partials.alert')
+
          @if ($errors->any())                                                
             <div class="alert alert-dark alert-dismissible fade show" role="alert">
             <strong>Error!</strong>                        
@@ -33,8 +36,12 @@
                                 <tr>                           
                                     <td>{{ $type->name }}</td>
                                     <td>
-                                        <a class="btn btn-success" href="{{ route('letter-types.download',$type->id) }}">Download Form</a>
-                                        <a class="btn btn-info" href="{{ route('letter-types.edit',$type->id) }}">Edit Form</a>
+                                        @if ($type->file !== null)
+                                            <a class="btn btn-success" href="{{ route('letter-types.download',$type->id) }}">Download Form</a>
+                                        @endif
+
+                                        <a class="btn btn-info" href="{{ route('letter-types.edit',$type->id) }}">{{ $type->file == null ? 'Upload Template' : "Edit" }}</a>
+                                       
                                     </td>
                                     
                                 </tr>

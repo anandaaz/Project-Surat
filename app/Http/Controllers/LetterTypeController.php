@@ -118,7 +118,7 @@ class LetterTypeController extends Controller
         $payload['user_id'] = $request->user()->id;
         $letterType->update($payload);
         
-        return redirect()->route('letter-types.index');
+        return redirect()->route('letter-types.index')->with('success', 'Berhasil memperbaruhi form');
     }
 
     /**
@@ -132,7 +132,7 @@ class LetterTypeController extends Controller
         $letterType = LetterType::find($id);
         File::delete(public_path($letterType->file_path)); // delete old files
         LetterType::find($id)->delete();
-        return redirect()->route('letter-types.index');
+        return redirect()->route('letter-types.index')->with('success', 'Berhasil menghapus form');
     }
 
     //handle download file
@@ -142,23 +142,13 @@ class LetterTypeController extends Controller
     	$path = public_path($letterType->file_path);
     	$fileName = $letterType->name;
 
-    	return Response::download($path, $fileName);
-    }
-
-    public function test(){
-        return view('layouts.ckeditor');
-    }
-
-
-
-
-    public function handleUploadImageCKEditor(Request $request){
-        if (request()->hasFile('file')) {
-            $path = $this->handleUploadFile($request);
-            
+        if(File::exists($path)){
+            $extension = explode('.', $path);
+            $fileName .=  '.' . end($extension);
+            return Response::download($path, $fileName);
         }
 
-        return $path;
+    	return redirect()->route('letter-types.index')->with('warning', 'File template belum tersedia');
     }
 
 

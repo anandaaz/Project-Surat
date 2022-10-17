@@ -55,9 +55,14 @@
                                         {{ Carbon::parse($perintahLembur->waktu)->format('l, j F Y')               }}                              
                                     </td>
                                     <td>{{ $perintahLembur->department->name }}</td>
-                                    <td class="p-1">   
+                                    <td class="p-1">  
+
+                                        @if ($perintahLembur->evidence !== null)
+                                            
                                         <a class="btn btn-success mb-1" href="{{ route('letters.perintah-kerja-lembur.download',[$perintahLembur->id]) }}">Download</a>
                                         <br/>
+                                        @endif
+
                                         <a class="btn btn-primary mb-1" href="{{ route('letters.perintah-kerja-lembur.show-detail',$perintahLembur->id) }}">Detail</a>
                                         <br/>
                                         

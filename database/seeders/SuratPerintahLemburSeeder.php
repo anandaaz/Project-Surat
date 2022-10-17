@@ -17,21 +17,18 @@ class SuratPerintahLemburSeeder extends Seeder
         collect([
             [
                 'waktu' => '2022/09/25',
-                'evidence' => 'test/test',
                 'created_by' => 1,
                 'letter_type_id' => 6,
                 'department_id' => 2,
             ],
             [
                 'waktu' => '2022/09/25',
-                'evidence' => 'test/test',
                 'created_by' => 1,
                 'letter_type_id' => 6,
                 'department_id' => 3,
             ],
             [
                 'waktu' => '2022/09/25',
-                'evidence' => 'test/test',
                 'created_by' => 1,
                 'letter_type_id' => 6,
                 'department_id' => 4,

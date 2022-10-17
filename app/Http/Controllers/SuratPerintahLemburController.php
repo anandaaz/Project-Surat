@@ -79,7 +79,7 @@ class SuratPerintahLemburController extends Controller
         $payload = $request->all();
 
         $payload['created_by'] = $activeUser->id;
-        
+
         if (request()->hasFile('evidence')) {
             $path = $this->handleUploadFile($request);
             $payload['evidence'] = $path;
@@ -101,7 +101,7 @@ class SuratPerintahLemburController extends Controller
         }
 
         $path = $suratPerintahLembur->evidence ? public_path($suratPerintahLembur->evidence) : null;
-        $fileName = 'Surat Perintah Lembur' . $suratPerintahLembur->department->name . ' ' . $suratPerintahLembur->waktu;
+        $fileName = 'Surat Perintah Lembur ' . $suratPerintahLembur->department->name . ' ' . $suratPerintahLembur->waktu;
         
         if(!File::exists($path)){
             return redirect()->route('letters.perintah-kerja-lembur.index')->with('warning', 'File tidak ditemukan, Silahkan Upload Ulang File Evidence');
