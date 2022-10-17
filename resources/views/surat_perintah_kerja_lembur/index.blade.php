@@ -66,14 +66,14 @@
                                         <a class="btn btn-primary mb-1" href="{{ route('letters.perintah-kerja-lembur.show-detail',$perintahLembur->id) }}">Detail</a>
                                         <br/>
                                         
-                                        @role('Admin'|'Manager'|'Supervisor'|'Leader'|'Foreman'))
+                                        @unlessrole('Operator')
                                         <a class="btn btn-info mb-1" href="{{ route('letters.perintah-kerja-lembur.edit-detail',$perintahLembur->id) }}">Edit</a>
                                         <br/>
 
                                             {!! Form::open(['method' => 'DELETE','route' => ['letters.perintah-kerja-lembur.destroy', $perintahLembur->id],'style'=>'display:inline']) !!}
                                                 {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
                                             {!! Form::close() !!}
-                                        @endrole
+                                        @endunlessrole
                                     </td>
                                 </tr>
                                 @endforeach

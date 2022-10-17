@@ -109,4 +109,10 @@ class SuratPerintahLemburController extends Controller
 
         return Response::download($path, $fileName);
     }
+
+    public function destroy($id){
+        $perintahLembur = SuratPerintahLembur::find($id);
+        $perintahLembur->delete();
+        return redirect()->route('letters.perintah-kerja-lembur.index')->with('success', 'Berhasil menghapus form');
+    }
 }
